@@ -1,48 +1,44 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
+import os
 
+# Variable used to located the directory of the file
+basedir = os.path.abspath(os.path.dirname(__file__))
 
+# Defines the database
+db = SQLAlchemy()
+
+# Defines flask app
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-app.app_context().push()
 
+# App configurations to set the location of the database, and disable the tracking of modificatons
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initializes the database and connects it to the app
+db.init_app(app)
+
+
+# Table created named Employee
 class Employee(db.Model):
-    __tablename__ = "employee"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
+    __tablename__ = "employees"
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(50), unique = True, nullable = False)
     age = db.Column(db.Integer)
     
-
     def __repr__(self):
-        return f'<Employee: {self.name} Age: {self.age}>'
+        return f'<Name: {self.name}, Age: {self.age}>'
 
 
-class Administrator(db.Model):
-    __tablename__ = "admin"
-    id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(50), unique=True, nullable=True)
-    password = db.Column(db.String(100), unique=True, nullable=True)
-
-
-    def __repr__(self):
-        return f'<Admin: {self.user}>'
-
-
+# App route for the index
 @app.route('/')
 def index():
-    return render_template("index.html")
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    return render_template("login.html")
-
-@app.route('/profile')
-def profile():
-    return render_template("profile.html")
+    employed = Employee.query.all()
+    return render_template('index.html', employees=employed, public = True)
 
 
+# Runs the program
 if __name__ == "__main__":
+    app.app_context().push()
     app.run(debug=True)
