@@ -2,15 +2,18 @@
 
 {% block content %}
     <h1 class="title">{% block title %} Employees {% endblock %}</h1>
-    <div class="content_next">
         {% for employee in employees %}
-            <div class="user">
-                <p><b>{{ employee.id }}</b></p>
-                <b>
-                    <p class="name">{{ employee.name }}</p>
-                </b>
-                <p>{{ employee.age }}</p>
+            <div class="col-sm">
+                <div class="user">
+                    <p><b>{{ employee.id }}</b></p>
+                    <b>
+                        <p class="name">{{ employee.name }}</p>
+                    </b>
+                    <p>{{ employee.age }}</p>
+                    <b>
+                        <p>{{ employee.dateJoined }}</p>
+                    </b>
+                </div>
             </div>
         {% endfor %}
-    </div>
 {%endblock content %}
