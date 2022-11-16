@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title"> {% block title %} {{ employee.name }} {% endblock %}</h1>
+    <div class="col-sm">
+        <div class="user">
+            <p><b>ID: {{ employee.id }}</b></p>
+            <b>
+                <p class="name">Full name: {{ employee.name }}</p>
+            </b>
+            <p>Age: {{ employee.age }} years old</p>
+            <b>
+                <p>Date joined: {{ employee.dateJoined }}</p>
+            </b>
+        </div>
+    </div>
+{% endblock %}
