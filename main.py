@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
-import os
+import jwt
 
 # Variable used to located the directory of the file
 basedir = os.path.abspath(os.path.dirname(__file__))
