@@ -56,6 +56,7 @@ def viewSpecific(id):
 @app.route('/create', methods=("GET", "POST"))
 def create():
     if request.method == 'POST':
+        
         name = request.form['fullname']
         age = int(request.form['age'])
         dateJoined = date.today()
@@ -64,10 +65,49 @@ def create():
         db.session.commit()
 
         return redirect(url_for('view'))
-    
     return render_template('create.html')
 
+@app.route('/<int:id>/edit', methods=("GET", "POST"))
+def edit(id):
+    employee = Employee.query.get_or_404(id)
+    
+    if request.method == "POST":
+        name = request.form['fullname']
+        age = int(request.form['age'])
+        dateJoined = date.today()
+        
+        employee.name = name
+        employee.age = age
+        employee.dateJoined = dateJoined
+        
+        db.session.add(employee)
+        db.session.commit()
+        return redirect(url_for('view'))
+    return render_template('edit.html', employee=employee)
 
+
+@app.route('/<int:id>/delete', methods=("GET", "POST"))
+def delete(id):
+    employee = Employee.query.get_or_404(id)
+    
+    try:
+        db.session.delete(employee)
+        db.session.commit()
+        return redirect(url_for('view'))
+    except:
+        return "Unsuccessfull"
+
+@app.route('/reset')
+def reset():
+    return render_template('reset.html')
+
+
+@app.route('/reset/confirmed', methods=("GET", "POST"))
+def reset_confirmed():
+    db.drop_all()
+    db.create_all()
+    employed = Employee.query.all()
+    return render_template('view.html', employees=employed)
 
 # Runs the program
 if __name__ == "__main__":

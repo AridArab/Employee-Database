@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} Reset Database {% endblock %}</h1>
+    <div>
+        <p>
+            Are you sure you wish to continue?
+        </p>
+        <br>
+        <p class="warning">
+            THIS ACTION IS IRREVERSIBLE
+        </p>
+        <br>
+        <br>
+        <a href="{{ url_for('reset_confirmed') }}">Confirm</a>
+{% endblock %}

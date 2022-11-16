@@ -13,6 +13,8 @@
                     <b>
                         <p>Date joined: {{ employee.dateJoined }}</p>
                     </b>
+                    <a href="{{ url_for('edit', id=employee.id) }}">Edit</a>
+                    <a href="{{ url_for('delete', id=employee.id) }}">Delete</a>
                 </div>
             </div>
         {% endfor %}
