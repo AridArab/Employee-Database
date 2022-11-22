@@ -3,13 +3,10 @@
 {% block content %}
     <h1 class="title">{% block title %} Welcome! {% endblock %}</h1>
     <p class="intro"> Click below to get view the Database
-        <li class="firstline">
-            <a class="navbar-brand" href="{{ url_for('view') }}">Get started</a>
-        </li>
         <br>
-        <br>
-        <p class="credits">
-            Created by Zohair Alsheikh
-        </p>
+        <form method="POST">
+            <button class="btn btn-outline-primary" type="submit">Get started</button>
+        </form>
+        <br><br>
     </p>
 {% endblock %}

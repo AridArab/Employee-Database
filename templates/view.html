@@ -2,20 +2,29 @@
 
 {% block content %}
     <h1 class="title">{% block title %} Employees {% endblock %}</h1>
-        {% for employee in employees %}
-            <div class="col-sm">
-                <div class="user">
-                    <p><b>ID: {{ employee.id }}</b></p>
-                    <b>
-                        <p class="name">Full name: {{ employee.name }}</p>
-                    </b>
-                    <p>Age: {{ employee.age }} years old</p>
-                    <b>
-                        <p>Date joined: {{ employee.dateJoined }}</p>
-                    </b>
-                    <a href="{{ url_for('edit', id=employee.id) }}">Edit</a>
-                    <a href="{{ url_for('delete', id=employee.id) }}">Delete</a>
+        {% if employees %}
+            {% for employee in employees %}
+                <div class="col-sm">
+                    <div class="user">
+                        <p><b>ID: {{ employee.id }}</b></p>
+                        <b>
+                            <p class="name">Full name: {{ employee.name }}</p>
+                        </b>
+                        <p>Age: {{ employee.age }} years old</p>
+                        <b>
+                            <p>Date joined: {{ employee.dateJoined }}</p>
+                        </b>
+                        <a href="{{ url_for('edit', id=employee.id) }}">Edit</a>
+                        <a href="{{ url_for('delete', id=employee.id) }}">Delete</a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+        <b>
+        <div class="empty">
+            <p class="empty">Database is Empty<br>
+                Click on create to add data to the database!
+            </p>
+        </div>
+        {% endif %}
 {%endblock content %}

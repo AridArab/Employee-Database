@@ -1,8 +1,11 @@
 from flask import Flask, request, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date
+#from wtforms import 
 import jwt
 import os
-from datetime import date
+
+
 
 # Variable used to located the directory of the file
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -16,6 +19,7 @@ app = Flask(__name__)
 
 # App configurations to set the location of the database, and disable the tracking of modificatons
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SECRET_KEY'] = '6d22d47e-cca3-4e44-8f89-0883a7b38f61'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initializes the database and connects it to the app
@@ -39,6 +43,8 @@ class Employee(db.Model):
 
 @app.route('/', methods=("GET", "POST"))
 def index():
+    if request.method == "POST":
+        return redirect('view')
     return render_template('index.html')
 
 
@@ -56,15 +62,17 @@ def viewSpecific(id):
 @app.route('/create', methods=("GET", "POST"))
 def create():
     if request.method == 'POST':
-        
         name = request.form['fullname']
-        age = int(request.form['age'])
-        dateJoined = date.today()
-        createdEmployee = Employee(name=name, age=age, dateJoined=dateJoined)
-        db.session.add(createdEmployee)
-        db.session.commit()
+        age = (request.form['age'])
+        if not name or not age:
+            flash("Please enter valid values")
+        else:
+            dateJoined = date.today()
+            createdEmployee = Employee(name=name, age=age, dateJoined=dateJoined)
+            db.session.add(createdEmployee)
+            db.session.commit()
 
-        return redirect(url_for('view'))
+            return redirect(url_for('view'))
     return render_template('create.html')
 
 @app.route('/<int:id>/edit', methods=("GET", "POST"))
@@ -73,23 +81,24 @@ def edit(id):
     
     if request.method == "POST":
         name = request.form['fullname']
-        age = int(request.form['age'])
-        dateJoined = date.today()
-        
-        employee.name = name
-        employee.age = age
-        employee.dateJoined = dateJoined
-        
-        db.session.add(employee)
-        db.session.commit()
-        return redirect(url_for('view'))
+        age = request.form['age']
+        if not name or not age:
+            flash("Please enter the new values")
+        else:
+            dateJoined = date.today()
+            employee.name = name
+            employee.age = int(age)
+            employee.dateJoined = dateJoined
+            db.session.add(employee)
+            db.session.commit()
+            return redirect(url_for('view'))
     return render_template('edit.html', employee=employee)
 
 
 @app.route('/<int:id>/delete', methods=("GET", "POST"))
 def delete(id):
     employee = Employee.query.get_or_404(id)
-    
+
     try:
         db.session.delete(employee)
         db.session.commit()
@@ -97,17 +106,26 @@ def delete(id):
     except:
         return "Unsuccessfull"
 
-@app.route('/reset')
+@app.route('/reset', methods=("GET", "POST"))
 def reset():
+    if request.method == "POST":
+        db.drop_all()
+        db.create_all()
+        return redirect(url_for('view'))
     return render_template('reset.html')
 
-
-@app.route('/reset/confirmed', methods=("GET", "POST"))
-def reset_confirmed():
-    db.drop_all()
-    db.create_all()
-    employed = Employee.query.all()
-    return render_template('view.html', employees=employed)
+#@app.route('/results', method=("GET", "POST"))
+#def search(entered):
+#    
+#    employed = Employee.query.all()
+#    entered  = request.form['searched']
+#    results = []
+#    
+#    if int(entered):    
+#        for employee in employed:
+#            if entered == Employee.query.get_or_404(int(entered)):
+#                results = results.append(Employee.query.get_or_404(int(entered)))
+            
 
 # Runs the program
 if __name__ == "__main__":

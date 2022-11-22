@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title"> {% block title %} Edit {{ employee.name }} {% endblock %}</h1>
-    <div class="col-sm">
+    <h1 class="title">{% block title %}Edit {{ employee.name }}{% endblock %}</h1>
+    <div>
         <form method="POST">
-        <div class="user">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in get_flashed_messages() %}
+                        <h2 class="alert alert-primary">{{ message }}</h2>
+                    {% endfor %}
+                 {% endif %}
+            {% endwith %}
             <label for="fullname">Enter the full name:</label>
             <input type="text" name="fullname"></input>
             <label for="age">Enter the age:</label>
             <input type="number" name="age"></input>
-            <button type="submit">Submit Changes</button>
-        </div>
+            <br>
+            <button class="btn btn-outline-success" type="submit">Submit Changes</button>
         </form>
     </div>
 {% endblock %}
