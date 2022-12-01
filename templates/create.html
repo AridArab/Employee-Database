@@ -3,7 +3,7 @@
 {% block content %}
     <h1 class="title">{% block title %} Create {% endblock %}</h1>
     <div>
-        <form METHOD="POST">
+        <form method="POST">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in get_flashed_messages() %}
@@ -19,4 +19,4 @@
             <button class="btn btn-outline-success" type="submit">Create Entry</button>
         </form>
     </div>
- {% endblock %}
+{% endblock %}

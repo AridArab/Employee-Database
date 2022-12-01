@@ -9,12 +9,12 @@
                     {% for message in get_flashed_messages() %}
                         <h2 class="alert alert-primary">{{ message }}</h2>
                     {% endfor %}
-                 {% endif %}
+                {% endif %}
             {% endwith %}
             <label for="fullname">Enter the full name:</label>
-            <input type="text" name="fullname"></input>
+            <input type="text" name="fullname">
             <label for="age">Enter the age:</label>
-            <input type="number" name="age"></input>
+            <input type="number" name="age">
             <br>
             <button class="btn btn-outline-success" type="submit">Submit Changes</button>
         </form>
