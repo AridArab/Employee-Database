@@ -114,18 +114,31 @@ def reset():
         return redirect(url_for('view'))
     return render_template('reset.html')
 
-#@app.route('/results', method=("GET", "POST"))
-#def search(entered):
-#    
-#    employed = Employee.query.all()
-#    entered  = request.form['searched']
-#    results = []
-#    
-#    if int(entered):    
-#        for employee in employed:
-#            if entered == Employee.query.get_or_404(int(entered)):
-#                results = results.append(Employee.query.get_or_404(int(entered)))
-            
+@app.route('/search', methods=('GET', 'POST'))
+def search():
+    resulted = []
+    totaldb = Employee.query.all()
+    listdb = Employee.query.with_entities(Employee.name, Employee.id)
+    namedb = Employee.query.with_entities(Employee.name)
+    iddb = Employee.query.with_entities(Employee.id)
+    entered = request.args.get('searched')
+    
+    if entered == "":
+        return render_template('search.html', resulted=listdb)
+    elif entered.isnumeric():
+        for i in iddb:
+            if entered in str(i):
+                resulted.append(str(i))
+        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
+    elif isinstance(str(entered), str):
+        for i in namedb:
+            if entered in str(i):
+                resulted.append(str(i))
+        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
+    else:
+        pass
+
+
 
 # Runs the program
 if __name__ == "__main__":
