@@ -117,10 +117,10 @@ def reset():
 def search():
     resulted = []
     listdb = Employee.query.with_entities(Employee.name).all()
-    entered = request.args.get('searched')
+    entered = request.args.get('searched').lower()
     if isinstance(entered, str):
         for i in listdb:
-            if entered in str(i):
+            if entered in str(i).lower():
                 resulted.append(str(i)[2:-3])
         return render_template('search.html', resulted=resulted, Employee=Employee, entered=entered)
     return render_template('search.html', listdb=listdb, Employee=Employee, entered=entered)
