@@ -37,7 +37,7 @@ class Employee(db.Model):
 
     
     def __repr__(self):
-        return f'<Name: {self.name}, Age: {self.age}, Date Joined: {self.dateJoined}>'
+        return (f"Name: {self.name} ID: {self.id}")
 
 
 
@@ -117,26 +117,15 @@ def reset():
 @app.route('/search', methods=('GET', 'POST'))
 def search():
     resulted = []
-    totaldb = Employee.query.all()
-    listdb = Employee.query.with_entities(Employee.name, Employee.id)
-    namedb = Employee.query.with_entities(Employee.name)
-    iddb = Employee.query.with_entities(Employee.id)
+    listdb = Employee.query.with_entities(Employee.name).all()
     entered = request.args.get('searched')
-    
-    if entered == "":
-        return render_template('search.html', resulted=listdb)
-    elif entered.isnumeric():
-        for i in iddb:
+    if isinstance(entered, str):
+        for i in listdb:
             if entered in str(i):
-                resulted.append(str(i))
-        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
-    elif isinstance(str(entered), str):
-        for i in namedb:
-            if entered in str(i):
-                resulted.append(str(i))
-        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
-    else:
-        pass
+                resulted.append(str(i)[2:-3])
+        return render_template('search.html', resulted=resulted, Employee=Employee)
+    return render_template('search.html', listdb=listdb, Employee=Employee)
+
 
 
 

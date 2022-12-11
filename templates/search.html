@@ -2,24 +2,22 @@
 
 {% block content %}
     <h1 class="title">{% block title %} Results {% endblock %}</h1>
-        {% if resulted %}
+        {% if listdb %}
+            {% for result in listdb %}
+                <div class="col-sm">
+                    <div class="user">
+                        <a class="name" href="{{ url_for('viewSpecific', id=Employee.query.filter_by(name=result[2:-3]).first().id) }}">{{ Employee.query.filter_by(name=result[2:-3]).all() }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}  
+        {% elif resulted %}
             {% for result in resulted %}
-                {% if result.isnumeric() %}
-                    <div class="col-sm">
-                        <div class="user">
-                            <a class="name">{{ result }}</a></p>
-                            <a class="name">Name: {{ Employee.query.filter_by(id=(result|int)) }} ID: {{ Employee.query.filter_by(id=(result|int)) }}</a></p>
-                        </div>
+                <div class="col-sm">
+                    <div class="user">
+                        <a class="name" href="{{ url_for('viewSpecific', id=Employee.query.filter_by(name=result).first().id) }}">{{ Employee.query.filter_by(name=result).all() }}</a></p>
                     </div>
-                {% else %}
-                    <div class="col-sm">
-                        <div class="user">
-                            <a class="name">{{ result }}</a></p>
-                            <a class="name">Name: {{ Employee.query.filter_by(name=result) }} ID: {{ Employee.query.filter_by(name=result) }}</a></p>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                </div>
+            {% endfor %}  
         {% else %}
             <b>
             <div class="empty">
