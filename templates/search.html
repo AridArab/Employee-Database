@@ -7,6 +7,7 @@
                 {% if result.isnumeric() %}
                     <div class="col-sm">
                         <div class="user">
+                            <a class="name">{{ testing }}</a></p>
                             <a class="name">{{ result }}</a></p>
                             <a class="name">Name: {{ Employee.query.filter_by(id=(result|int)) }} ID: {{ Employee.query.filter_by(id=(result|int)) }}</a></p>
                         </div>
@@ -14,8 +15,9 @@
                 {% else %}
                     <div class="col-sm">
                         <div class="user">
+                            <a class="name">{{ testing }}</a></p>
                             <a class="name">{{ result }}</a></p>
-                            <a class="name">Name: {{ Employee.query.filter_by(name=result) }} ID: {{ Employee.query.filter_by(name=result) }}</a></p>
+                            <a class="name">Name: {{ Employee.query.filter_by(name=testing) }} ID: {{ Employee.query.filter_by(name=testing)}}</a></p>
                         </div>
                     </div>
                 {% endif %}

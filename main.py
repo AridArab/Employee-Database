@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
-#from wtforms import 
 import jwt
 import os
 
@@ -128,13 +127,14 @@ def search():
     elif entered.isnumeric():
         for i in iddb:
             if entered in str(i):
-                resulted.append(str(i))
-        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
+                resulted.append(str(i)[2:-3])
+        return render_template('search.html', resulted=resulted, Employee=Employee)
     elif isinstance(str(entered), str):
         for i in namedb:
             if entered in str(i):
-                resulted.append(str(i))
-        return str(type(resulted))    #render_template('search.html', resulted=resulted, Employee=Employee)
+                resulted.append(str(i)[2:-3])
+        testing = Employee.query.filter_by(name=str(i)[2:-3])
+        return render_template('search.html', resulted=resulted, Employee=Employee, testing=testing)
     else:
         pass
 
