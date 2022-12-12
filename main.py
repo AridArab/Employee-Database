@@ -1,16 +1,10 @@
 from flask import Flask, request, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
+from models import db, basedir, Employee, Administrator
 import jwt
 import os
 
-
-
-# Variable used to located the directory of the file
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-# Defines the database
-db = SQLAlchemy()
 
 # Defines flask app
 app = Flask(__name__)
@@ -23,21 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initializes the database and connects it to the app
 db.init_app(app)
-
-
-
-# Table created named Employee
-class Employee(db.Model):
-    __tablename__ = "employees"
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(50), unique = True, nullable = False)
-    age = db.Column(db.Integer)
-    dateJoined = db.Column(db.String(10), nullable = False)
-
-    
-    def __repr__(self):
-        return (f"Name: {self.name} ID: {self.id}")
-
 
 
 @app.route('/', methods=("GET", "POST"))
