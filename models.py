@@ -26,13 +26,3 @@ class Employee(db.Model):
     
     def __repr__(self):
         return (f"Name: {self.name} ID: {self.id}")
-
-class Administrator(db.Model):
-    __tablename__ = "admins"
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(30), unique = True, nullable = False)
-    password = db.Column(db.String(30), unique = True, nullable = False)
-
-    
-    def __repr(self):
-        return(f"Admin: {self.username}")

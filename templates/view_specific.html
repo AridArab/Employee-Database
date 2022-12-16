@@ -8,10 +8,30 @@
             <b>
                 <p class="name">Full name: {{ employee.name }}</p>
             </b>
-            <p>Age: {{ employee.age }} years old</p>
+            <b>
+                <p>Age: {{ employee.age }} years old</p>
+            </b>
             <b>
                 <p>Date joined: {{ employee.dateJoined }}</p>
             </b>
+            <b>
+                <p>BirthDate: {{ employee.birthday }}</p>
+            </b>
+            <b>
+                <p>Work Schedule: {{ employee.worktype }}</p>
+            </b>
+            <b>
+                <p>Job: {{ employee.job }}</p>
+            </b>
+            <b>
+                <p>Salary: {{ employee.pay }}</p>
+            </b>
+            <b>
+                <p>Bio:<br>{{ employee.bio }}</p>
+            </b>
+            <form method="post">
+                <button class="btn btn-outline-warning" type="submit">Delete Employee</button>
+            </form>
         </div>
     </div>
 {% endblock %}

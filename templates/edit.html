@@ -13,10 +13,30 @@
             {% endwith %}
             <label for="fullname">Enter the full name:</label>
             <input type="text" name="fullname">
+            &nbsp;&nbsp;&nbsp;
             <label for="age">Enter the age:</label>
             <input type="number" name="age">
+            <br><br>
+            <label for="birthdate">Enter your Birthday:</label>
+            <input type="date" name="birthdate">
+            &nbsp;&nbsp;&nbsp;
+            <label for="typeofwork">Enter Employee's work contract:</label>
+            <select id="typeofwork" name="typeofwork">
+                <option value="part">Part-Time</option>
+                <option value="full">Full-Time</option>
+                <option value="intern">Intern</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;
+            <label for="job">Enter Employee's Job:</label>
+            <input type="text" name="job">
+            <br><br>
+            <label for="money">Enter the Employee's Pay/Salary</label>
+            <input type="number" name="money">
+            <br><br>
+            <label for="bio">Enter Employee's Bio:</label>
+            <br><br>
+            <textarea name="bio" rows="10" cols="60"></textarea>
             <br>
-            <button class="btn btn-outline-success" type="submit">Submit Changes</button>
-        </form>
+            <button class="btn btn-outline-success" type="submit">Create Entry</button>
     </div>
 {% endblock %}
