@@ -17,6 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initializes the database and connects it to the app
 db.init_app(app)
 
+# App route for the index page
 @app.route('/', methods=("GET", "POST"))
 def index():
 
@@ -27,6 +28,7 @@ def index():
     return render_template('index.html')
 
 
+
 # App route for the page to view the database
 @app.route('/view', methods=("GET", "POST"))
 def view():
@@ -35,6 +37,9 @@ def view():
 
     return render_template('view.html', employees=employed, public = True)
 
+
+
+# App route for the page to view a specific employee
 @app.route('/<int:id>', methods=("GET", "POST"))
 def viewSpecific(id):
 
@@ -47,6 +52,8 @@ def viewSpecific(id):
 
     return render_template('view_specific.html', employee=employee)
 
+
+# App route for the page to create a new employee entry
 @app.route('/create', methods=("GET", "POST"))
 def create():
 
@@ -77,6 +84,8 @@ def create():
 
     return render_template('create.html')
 
+
+# App route for the web page to edit an employee entry
 @app.route('/<int:id>/edit', methods=("GET", "POST"))
 def edit(id):
 
@@ -115,7 +124,7 @@ def edit(id):
 
     return render_template('edit.html', employee=employee)
 
-
+# App route for the web page to delete a employee entry
 @app.route('/<int:id>/delete', methods=("GET", "POST"))
 def delete(id):
 
@@ -132,6 +141,8 @@ def delete(id):
 
         return "Unsuccessfull"
 
+
+# App route for the web page to reset the database
 @app.route('/reset', methods=("GET", "POST"))
 def reset():
 
@@ -144,6 +155,8 @@ def reset():
 
     return render_template('reset.html')
 
+
+# App route for the web page to search the database
 @app.route('/search', methods=('GET', 'POST'))
 def search():
 
