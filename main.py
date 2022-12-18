@@ -147,11 +147,18 @@ def delete(id):
 def reset():
 
     if request.method == "POST":
+        
+        try:
 
-        db.drop_all()
-        db.create_all()
+            db.drop_all()
+            db.create_all()
 
-        return redirect(url_for('view'))
+            return redirect(url_for('view'))
+        except:
+
+            db.create_all
+
+            return redirect(url_for('view'))
 
     return render_template('reset.html')
 
